@@ -18,6 +18,9 @@
                                         in
                                             {
                                                 options.tree-serialization =
+
+
+
                                                     {
                                                         explode =
                                                             _lib.mkOption
@@ -200,7 +203,7 @@
                                                                                                 ( _config.tree-serialization.explode { bytes = bytes ; name = "explode" ; input = expected ; output = "$OUTPUT" ; } )
                                                                                                 ( _config.tree-serialization.implode { name = "implode" ; input = "$OUTPUT" ; output = "$OBSERVED" ; } )
                                                                                             ] ;
-                                                                                        variables =
+                                                                                        sessionVariables =
                                                                                             {
                                                                                                 OBSERVED = "$( mktemp --directory )" ;
                                                                                                 OUTPUTS = "$( mktemp --directory )" ;
