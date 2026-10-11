@@ -34,7 +34,7 @@
                                                                                     mounts =
                                                                                         {
                                                                                             input = { read-only = true ; source = input ; type = "bind" ; } ;
-                                                                                            output = { source = output ; type = "bind" ; } ;
+                                                                                            output = { source = "$OUTPUT" ; type = "bind" ; } ;
                                                                                             temporary = { type = "temporary" ; } ;
                                                                                         } ;
                                                                                     name = name ;
@@ -117,7 +117,7 @@
                                                                                     mounts =
                                                                                         {
                                                                                             input = { read-only = true ; source = input ; type = "bind" ; } ;
-                                                                                            output = { source = output ; type = "bind" ; } ;
+                                                                                            output = { source = "$OBSERVED" ; type = "bind" ; } ;
                                                                                             temporary = { type = "temporary" ; } ;
                                                                                         } ;
                                                                                     name = name ;
@@ -163,13 +163,11 @@
                                             lazy-shell-application ,
                                             nixosTest ,
                                             obviated-by ,
-                                            observed ,
                                             visitor
                                         } :
                                             {
                                                 bytes ,
-                                                expected ,
-                                                output
+                                                expected
                                             } :
                                             {
                                                 obviated-by = obviated-by ;
