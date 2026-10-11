@@ -122,7 +122,8 @@
                                             lazy-shell-application ,
                                             nixosTest ,
                                             obviated-by ,
-                                            observed
+                                            observed ,
+                                            visitor
                                         } :
                                             {
                                                 bytes ,
@@ -169,7 +170,7 @@
                                                                                                 }
                                                                                         )
                                                                                     ] ;
-                                                                                imports = [ failure implementation lazy-shell-application ] ;
+                                                                                imports = [ failure implementation lazy-shell-application visitor ] ;
                                                                             } ;
                                                             testScript =
                                                                 ''
