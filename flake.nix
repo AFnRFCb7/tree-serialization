@@ -6,7 +6,8 @@
                 lib =
                     {
                         config-identity ? x : x ,
-                        lib-identity ? x : x
+                        lib-identity ? x : x ,
+                        pkgs-identity ? x : x
                     } :
                         let
                             implementation =
