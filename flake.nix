@@ -120,7 +120,7 @@
                                                                                     mounts =
                                                                                         {
                                                                                             input = { read-only = true ; source = input ; type = "bind" ; } ;
-                                                                                            output = { source = "$OBSERVED" ; type = "bind" ; } ;
+                                                                                            output = { source = "/build/observed" ; type = "bind" ; } ;
                                                                                             temporary = { type = "temporary" ; } ;
                                                                                         } ;
                                                                                     name = name ;
@@ -207,7 +207,7 @@
                                                                                                     runtimeInputs = [ _pkgs.coreutils ] ;
                                                                                                     text =
                                                                                                         ''
-                                                                                                            mkdir --parents /build/observed /build/outputs
+                                                                                                            mkdir --parents /build/observed /build/output
                                                                                                         '' ;
                                                                                                 }
                                                                                         )
