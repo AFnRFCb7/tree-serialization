@@ -178,7 +178,7 @@
                                                                     client.succeed("prepare")
                                                                     client.succeed("explode")
                                                                     client.succeed("implode")
-                                                                    client.succeed("observed")
+                                                                    client.succeed("compare")
                                                                 '' ;
                                                         } ;
                                                 type = "tree-serialization" ;
