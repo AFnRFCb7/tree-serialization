@@ -35,6 +35,7 @@
                                                                                         {
                                                                                             input = { read-only = true ; source = input ; type = "bind" ; } ;
                                                                                             output = { source = output ; type = "bind" ; } ;
+                                                                                            temporary = { type = "temporary" ; } ;
                                                                                         } ;
                                                                                     name = name ;
                                                                                     post = null ;
@@ -56,14 +57,15 @@
                                                                                                         "permissions" : $PERMISSIONS ,
                                                                                                         "tag" : $TAG ,
                                                                                                         "type" : $TYPE
-                                                                                                    }' > "/mounts/output/$HASH.json"
+                                                                                                    }' > "/mounts/temporary/$HASH.json"
                                                                                                 if [[ "$TYPE" == "regular file" ]]
                                                                                                 then
-                                                                                                    mkdir --parents "/output/$HASH"
-                                                                                                    cd "/output/$HASH"
+                                                                                                    mkdir --parents "/mounts/temporary/$HASH"
+                                                                                                    cd "/mounts/output/$HASH"
                                                                                                     split --bytes ${ bytes } "$INPUT_FILE"
                                                                                                 fi
                                                                                             done
+                                                                                            mv /mounts/temporary/. /mounts/output
                                                                                         '' ;
                                                                                 } ;
                                                                     type = _lib.types.functionTo _lib.types.package ;
@@ -83,6 +85,7 @@
                                                                                         {
                                                                                             input = { read-only = true ; source = input ; type = "bind" ; } ;
                                                                                             output = { source = output ; type = "bind" ; } ;
+                                                                                            temporary = { type = "temporary" ; } ;
                                                                                         } ;
                                                                                     name = name ;
                                                                                     post = null ;
@@ -94,7 +97,7 @@
                                                                                                 PERMISSIONS="$( jq --raw-output ".permissions" "$INPUT_FILE.json" )" || failure 0537099870175194
                                                                                                 TAG="$( jq --raw-output ".tag" "$INPUT_FILE.json" )" || failure 5311405440579224
                                                                                                 TYPE="$( jq --raw-output ".type" "$INPUT_FILE.json" )" || failure 4647824064526106
-                                                                                                OUTPUT_FILE="/output/$TAG"
+                                                                                                OUTPUT_FILE="/temporary/$TAG"
                                                                                                 OUTPUT_DIRECTORY="$( dirname "$OUTPUT_FILE" )" || failure 4175145871150273
                                                                                                 mkdir --parents "$OUTPUT_DIRECTORY"
                                                                                                 if [[ "$TYPE" == "directory" ]]
@@ -105,10 +108,11 @@
                                                                                                     PLUG="{ "$" }{INPUT_FILE%.*}"
                                                                                                     cat "$PLUG/*" > "$OUTPUT_FILE"
                                                                                                 else
-                                                                                                    failure 5539970079890550 "$INPUT_FILE" "$OUTPUT_FILE" "$OUTPUT_DIRECTORY" "$PERMISSIONS" "$TAG" "$TYPE"
+                                                                                                    failure 5539970079890550 "$INPUT_FILE" "$TEMPORARY_FILE" "$OUTPUT_FILE" "$OUTPUT_DIRECTORY" "$PERMISSIONS" "$TAG" "$TYPE"
                                                                                                 fi
-                                                                                                chmod "$PERMISSIONS" "$OUTPUT_FILE"
+                                                                                                chmod "$PERMISSIONS" "$TEMPORARY_FILE"
                                                                                             done
+                                                                                            mv /mounts/temporary /mounts/output
                                                                                         '' ;
                                                                                 } ;
                                                                 } ;
