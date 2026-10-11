@@ -48,6 +48,7 @@
                                                                                                         {
                                                                                                             mounts = { input = { read-only = true ; source = "." ; type = "bind" ; } ; } ;
                                                                                                             name = "readlink-safe" ;
+                                                                                                            post = null ;
                                                                                                             runtime-inputs = pkgs : [ pkgs.coreutils ] ;
                                                                                                             text =
                                                                                                                 ''
