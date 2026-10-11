@@ -110,7 +110,7 @@
                                                                                                         "target" : $TARGET ,
                                                                                                         "type" : $TYPE
                                                                                                     }' > "/mounts/temporary/$HASH.json"
-                                                                                                echo 5558493800477045 >&2
+                                                                                                echo 5558493800477045 "$TYPE" >&2
                                                                                                 if [[ "$TYPE" == "regular file" ]]
                                                                                                 then
                                                                                                     mkdir --parents "/mounts/temporary/$HASH"
@@ -118,7 +118,7 @@
                                                                                                     split --bytes ${ bytes } "$INPUT_FILE"
                                                                                                 elif [[ "$TYPE" == "directory" ]] || [[ "$TYPE" == "symbolic link" ]]
                                                                                                 then
-                                                                                                    :
+                                                                                                    echo 4406279822562285 >&2
                                                                                                 else
                                                                                                     failure 8786988475730505 "$HASH" "$PERMISSIONS" "$TAG" "$TYPE"
                                                                                                 fi
