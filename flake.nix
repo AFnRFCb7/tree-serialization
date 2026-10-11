@@ -37,7 +37,7 @@
                                                                                     mounts =
                                                                                         {
                                                                                             input = { read-only = true ; source = input ; type = "bind" ; } ;
-                                                                                            output = { source = "$OUTPUT" ; type = "bind" ; } ;
+                                                                                            output = { source = "/build/output" ; type = "bind" ; } ;
                                                                                             temporary = { type = "temporary" ; } ;
                                                                                         } ;
                                                                                     name = name ;
@@ -185,36 +185,33 @@
                                                                         _pkgs = pkgs-identity pkgs ;
                                                                         in
                                                                             {
-                                                                                environment =
-                                                                                    {
-                                                                                        systemPackages =
-                                                                                            [
-                                                                                                (
-                                                                                                    _pkgs.writeShellApplication
-                                                                                                        {
-                                                                                                            name = "compare" ;
-                                                                                                            runtimeInputs = [ _pkgs.coreutils _pkgs.diffutils ] ;
-                                                                                                            text =
-                                                                                                                ''
-                                                                                                                    diff --unified ${ expected } "/build/observed"
-                                                                                                                '' ;
-                                                                                                        }
-                                                                                                )
-                                                                                                ( _config.tree-serialization.explode { bytes = bytes ; name = "explode" ; input = expected ; output = "/build/output" ; } )
-                                                                                                ( _config.tree-serialization.implode { name = "implode" ; input = "/build/output" ; output = "/build/observed" ; } )
-                                                                                                (
-                                                                                                    _pkgs.writeShellApplication
-                                                                                                        {
-                                                                                                            name = "prepare" ;
-                                                                                                            runtimeInputs = [ _pkgs.coreutils ] ;
-                                                                                                            text =
-                                                                                                                ''
-                                                                                                                    mkdir --parents /build/observed /build/outputs
-                                                                                                                '' ;
-                                                                                                        }
-                                                                                                )
-                                                                                            ] ;
-                                                                                    } ;
+                                                                                environment.systemPackages =
+                                                                                    [
+                                                                                        (
+                                                                                            _pkgs.writeShellApplication
+                                                                                                {
+                                                                                                    name = "compare" ;
+                                                                                                    runtimeInputs = [ _pkgs.coreutils _pkgs.diffutils ] ;
+                                                                                                    text =
+                                                                                                        ''
+                                                                                                            diff --unified ${ expected } "/build/observed"
+                                                                                                        '' ;
+                                                                                                }
+                                                                                        )
+                                                                                        ( _config.tree-serialization.explode { bytes = bytes ; name = "explode" ; input = expected ; output = "/build/output" ; } )
+                                                                                        ( _config.tree-serialization.implode { name = "implode" ; input = "/build/output" ; output = "/build/observed" ; } )
+                                                                                        (
+                                                                                            _pkgs.writeShellApplication
+                                                                                                {
+                                                                                                    name = "prepare" ;
+                                                                                                    runtimeInputs = [ _pkgs.coreutils ] ;
+                                                                                                    text =
+                                                                                                        ''
+                                                                                                            mkdir --parents /build/observed /build/outputs
+                                                                                                        '' ;
+                                                                                                }
+                                                                                        )
+                                                                                    ] ;
                                                                                 imports = [ failure implementation lazy-shell-application visitor ] ;
                                                                             } ;
                                                             testScript =
