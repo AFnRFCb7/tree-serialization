@@ -92,11 +92,11 @@
                                                                                     runtime-inputs = pkgs : [ ( _config.failure { } ) pkgs.coreutils pkgs.findutils pkgs.jq ] ;
                                                                                     text =
                                                                                         ''
-                                                                                            find /input -mindepth 1 -maxdepth 1 -type f -name "*.json" | while read -r INPUT_FILE
+                                                                                            find /mounts/input -mindepth 1 -maxdepth 1 -type f -name "*.json" | sort | while read -r INPUT_FILE
                                                                                             do
-                                                                                                PERMISSIONS="$( jq --raw-output ".permissions" "$INPUT_FILE.json" )" || failure 0537099870175194
-                                                                                                TAG="$( jq --raw-output ".tag" "$INPUT_FILE.json" )" || failure 5311405440579224
-                                                                                                TYPE="$( jq --raw-output ".type" "$INPUT_FILE.json" )" || failure 4647824064526106
+                                                                                                PERMISSIONS="$( jq --raw-output ".permissions" "$INPUT_FILE" )" || failure 0537099870175194
+                                                                                                TAG="$( jq --raw-output ".tag" "$INPUT_FILE" )" || failure 5311405440579224
+                                                                                                TYPE="$( jq --raw-output ".type" "$INPUT_FILE" )" || failure 4647824064526106
                                                                                                 OUTPUT_FILE="/temporary/$TAG"
                                                                                                 OUTPUT_DIRECTORY="$( dirname "$OUTPUT_FILE" )" || failure 4175145871150273
                                                                                                 mkdir --parents "$OUTPUT_DIRECTORY"
@@ -110,7 +110,7 @@
                                                                                                 else
                                                                                                     failure 5539970079890550 "$INPUT_FILE" "$TEMPORARY_FILE" "$OUTPUT_FILE" "$OUTPUT_DIRECTORY" "$PERMISSIONS" "$TAG" "$TYPE"
                                                                                                 fi
-                                                                                                chmod "$PERMISSIONS" "$TEMPORARY_FILE"
+                                                                                                chmod "$PERMISSIONS" "$OUTPUT_FILE"
                                                                                             done
                                                                                             cp --recursive /mounts/temporary/. /mounts/output
                                                                                         '' ;
