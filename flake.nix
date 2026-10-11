@@ -109,19 +109,6 @@
                                                                                                         "tag" : $TAG ,
                                                                                                         "target" : $TARGET ,
                                                                                                         "type" : $TYPE
-                                                                                                    }' >&2
-                                                                                                echo 4753658272640220 >&2
-                                                                                                jq \
-                                                                                                    --null-input \
-                                                                                                    --arg PERMISSIONS "$PERMISSIONS" \
-                                                                                                    --arg TAG "$TAG" \
-                                                                                                    --arg TARGET "$TARGET" \
-                                                                                                    --arg TYPE "$TYPE" \
-                                                                                                    '{
-                                                                                                        "permissions" : $PERMISSIONS ,
-                                                                                                        "tag" : $TAG ,
-                                                                                                        "target" : $TARGET ,
-                                                                                                        "type" : $TYPE
                                                                                                     }' > "/mounts/temporary/$HASH.json"
                                                                                                 echo 5558493800477045 >&2
                                                                                                 if [[ "$TYPE" == "regular file" ]]
