@@ -133,7 +133,7 @@
                                                                                                 PERMISSIONS="$( jq --raw-output ".permissions" "$INPUT_FILE" )" || failure 0537099870175194
                                                                                                 TAG="$( jq --raw-output ".tag" "$INPUT_FILE" )" || failure 5311405440579224
                                                                                                 TYPE="$( jq --raw-output ".type" "$INPUT_FILE" )" || failure 4647824064526106
-                                                                                                OUTPUT_FILE="/temporary/$TAG"
+                                                                                                OUTPUT_FILE="/mounts/temporary/$TAG"
                                                                                                 OUTPUT_DIRECTORY="$( dirname "$OUTPUT_FILE" )" || failure 4175145871150273
                                                                                                 mkdir --parents "$OUTPUT_DIRECTORY"
                                                                                                 if [[ "$TYPE" == "directory" ]]
