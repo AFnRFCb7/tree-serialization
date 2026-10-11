@@ -80,8 +80,8 @@
                                                                                 {
                                                                                     mounts =
                                                                                         {
-                                                                                            input = { read-only = true ; source = input ; type = bind ; } ;
-                                                                                            output = { source = output ; type = bind ; } ;
+                                                                                            input = { read-only = true ; source = input ; type = "bind" ; } ;
+                                                                                            output = { source = output ; type = "bind" ; } ;
                                                                                         } ;
                                                                                     name = name ;
                                                                                     post = null ;
