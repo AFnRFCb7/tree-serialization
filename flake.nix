@@ -44,7 +44,7 @@
                                                                                             [
                                                                                                 ( _config.failure { } )
                                                                                                 (
-                                                                                                    _config.lazy-tree-application
+                                                                                                    _config.lazy-shell-application
                                                                                                         {
                                                                                                             mounts = { input = { read-only = true ; source = "." ; type = "bind" ; } ; } ;
                                                                                                             name = "readlink-safe" ;
