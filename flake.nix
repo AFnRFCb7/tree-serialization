@@ -194,7 +194,7 @@
                                                                                                     runtimeInputs = [ _pkgs.coreutils _pkgs.diffutils ] ;
                                                                                                     text =
                                                                                                         ''
-                                                                                                            diff --unified ${ expected } "/build/observed"
+                                                                                                            diff --recursive --unified ${ expected } "/build/observed"
                                                                                                         '' ;
                                                                                                 }
                                                                                         )
