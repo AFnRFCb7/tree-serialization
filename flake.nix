@@ -70,13 +70,13 @@
                                                                                             ] ;
                                                                                     text =
                                                                                         ''
-                                                                                            echo 2953389754191068
-                                                                                            printf 'Mount contents:\n'
-                                                                                            ls -la /mounts/input
+                                                                                            echo 2953389754191068 >&2
+                                                                                            echo Mount contents: >&2
+                                                                                            ls -la /mounts/input >&2
 
-                                                                                            printf 'Mount identity:\n'
-                                                                                            stat /mounts/input
-                                                                                            echo 1080191885218945
+                                                                                            echo Mount identity: >&2
+                                                                                            stat /mounts/input >&2
+                                                                                            echo 1080191885218945 >&2
 
                                                                                             printf 'Children:\n'
                                                                                             find /mounts/input -mindepth 1 -maxdepth 1 -print
@@ -240,7 +240,7 @@
                                                                 ''
                                                                     client.wait_for_unit("multi-user.target")
                                                                     client.succeed("prepare")
-                                                                    client.succeed("explode")
+                                                                    print(client.succeed("explode"))
                                                                     client.succeed("implode")
                                                                     client.succeed("compare")
                                                                 '' ;
