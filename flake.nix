@@ -103,7 +103,7 @@
                                                                                                 elif [[ "$TYPE" == "regular file" ]]
                                                                                                 then
                                                                                                     PLUG="{ "$" }{INPUT_FILE%.*}"
-                                                                                                    cat "$PLUG/* > "$OUTPUT_FILE"
+                                                                                                    cat "$PLUG/*" > "$OUTPUT_FILE"
                                                                                                 else
                                                                                                     failure 5539970079890550 "$INPUT_FILE" "$OUTPUT_FILE" "$OUTPUT_DIRECTORY" "$PERMISSIONS" "$TAG" "$TYPE"
                                                                                                 fi
