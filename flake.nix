@@ -70,11 +70,13 @@
                                                                                             ] ;
                                                                                     text =
                                                                                         ''
+                                                                                            echo 2953389754191068
                                                                                             printf 'Mount contents:\n'
                                                                                             ls -la /mounts/input
 
                                                                                             printf 'Mount identity:\n'
                                                                                             stat /mounts/input
+                                                                                            echo 1080191885218945
 
                                                                                             printf 'Children:\n'
                                                                                             find /mounts/input -mindepth 1 -maxdepth 1 -print
