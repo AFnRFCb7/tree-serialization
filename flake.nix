@@ -70,14 +70,11 @@
                                                                                             ] ;
                                                                                     text =
                                                                                         ''
-                                                                                            echo 7510388921240658 >&2
                                                                                             find /mounts/input | while read -r INPUT_FILE
                                                                                             do
-                                                                                                echo 5167942701307991 INPUT_FILE "$INPUT_FILE" >&2
                                                                                                 HASH="$( echo "$INPUT_FILE" | sha512sum | cut --characters 1-128 )" || failure 0195115283959486
                                                                                                 PERMISSIONS="$( stat --printf %a "$INPUT_FILE" )" || failure 5743431110033372
                                                                                                 TAG="$( echo "$INPUT_FILE" | cut --characters 15- )" || failure 4323730760707892
-                                                                                                echo 9182220118841732 >&2
                                                                                                 TARGET="$( readlink-safe "$INPUT_FILE" )" || failure 1577566704508967
                                                                                                 echo 8088214316338702 >&2
                                                                                                 TYPE="$( stat --printf %F "$INPUT_FILE" )" || failure 5742797212640718
