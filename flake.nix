@@ -49,7 +49,7 @@
                                                                                                 (
                                                                                                     _config.lazy-shell-application
                                                                                                         {
-                                                                                                            mounts = { input = { read-only = true ; source = "." ; type = "bind" ; } ; } ;
+                                                                                                            mounts = { input = { read-only = true ; source = "/mounts/input" ; type = "bind" ; } ; } ;
                                                                                                             name = "readlink-safe" ;
                                                                                                             post = null ;
                                                                                                             runtime-inputs = pkgs : [ pkgs.coreutils ] ;
@@ -76,7 +76,6 @@
                                                                                                 PERMISSIONS="$( stat --printf %a "$INPUT_FILE" )" || failure 5743431110033372
                                                                                                 TAG="$( echo "$INPUT_FILE" | cut --characters 15- )" || failure 4323730760707892
                                                                                                 TARGET="$( readlink-safe "$INPUT_FILE" )" || failure 1577566704508967
-                                                                                                echo 8088214316338702 >&2
                                                                                                 TYPE="$( stat --printf %F "$INPUT_FILE" )" || failure 5742797212640718
                                                                                                 jq \
                                                                                                     --null-input \
@@ -113,10 +112,8 @@
                                                                                                 else
                                                                                                     failure 8786988475730505 "$HASH" "$PERMISSIONS" "$TAG" "$TYPE"
                                                                                                 fi
-                                                                                                echo 7239548551536710 >&2
                                                                                             done
                                                                                             cp --recursive /mounts/temporary/. /mounts/output
-                                                                                            echo 6519844586509348 >&2
                                                                                         '' ;
                                                                                 } ;
                                                                     type = _lib.types.functionTo _lib.types.package ;
