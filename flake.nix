@@ -56,7 +56,7 @@
                                                                                                         "tag" : $TAG ,
                                                                                                         "type" : $TYPE
                                                                                                     }' > "/output/$HASH.json"
-                                                                                                if [[ "TYPE" == "regular file" ]]
+                                                                                                if [[ "$TYPE" == "regular file" ]]
                                                                                                 then
                                                                                                     mkdir --parents "/output/$HASH"
                                                                                                     cd "/output/$HASH"
