@@ -56,7 +56,7 @@
                                                                                                                     then
                                                                                                                         readlink /mounts/input
                                                                                                                     else
-                                                                                                                        echo -en
+                                                                                                                        echo -n ""
                                                                                                                     fi
                                                                                                                 '' ;
                                                                                                         }
@@ -91,7 +91,7 @@
                                                                                                     mkdir --parents "/mounts/temporary/$HASH"
                                                                                                     cd "/mounts/temporary/$HASH"
                                                                                                     split --bytes ${ bytes } "$INPUT_FILE"
-                                                                                                elif [[ "$TYPE" == "symbolic link" ]]
+                                                                                                elif [[ "$TYPE" == "directory" ]] || [[ "$TYPE" == "symbolic link" ]]
                                                                                                 then
                                                                                                     :
                                                                                                 else
