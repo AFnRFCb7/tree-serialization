@@ -160,7 +160,7 @@
                                                                                                         '' ;
                                                                                                 }
                                                                                         )
-                                                                                        ( _config.tree-serialization.explode { bytes = "bytes" ; name = "explode" ; input = expected ; output = output ; } )
+                                                                                        ( _config.tree-serialization.explode { bytes = bytes ; name = "explode" ; input = expected ; output = output ; } )
                                                                                         ( _config.tree-serialization.implode { name = "implode" ; input = output ; output = observed ; } )
                                                                                         (
                                                                                             _pkgs.writeShellApplication
