@@ -135,8 +135,9 @@
                                                         {
                                                             name = "tree-serialization" ;
                                                             nodes.client =
-                                                                { pkgs , ... } :
+                                                                { config , pkgs , ... } :
                                                                     let
+                                                                        _config = config-identity config ;
                                                                         _pkgs = pkgs-identity pkgs ;
                                                                         in
                                                                             {
