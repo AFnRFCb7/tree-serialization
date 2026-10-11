@@ -5,12 +5,14 @@
             {
                 lib =
                     {
+                        config-identity ? x : x ,
                         lib-identity ? x : x
                     } :
                         let
                             implementation =
-                                { lib , ... } :
+                                { config , lib , ... } :
                                     let
+                                        _config = config-identity config ;
                                         _lib = lib-identity lib ;
                                         in
                                             {
@@ -23,7 +25,7 @@
                                                                         {
                                                                             name
                                                                         } :
-                                                                            _conf.lazy-shell-application
+                                                                            _config.lazy-shell-application
                                                                                 {
                                                                                     mounts = { } ;
                                                                                     name = name ;
