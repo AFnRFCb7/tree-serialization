@@ -41,7 +41,7 @@
                                                                                     runtime-inputs = pkgs : [ ( _config.failure { } ) pkgs.coreutils pkgs.findutils pkgs.jq ] ;
                                                                                     text =
                                                                                         ''
-                                                                                            find /input | while read -r INPUT_FILE
+                                                                                            find /mounts/input | while read -r INPUT_FILE
                                                                                             do
                                                                                                 HASH="$( echo "$INPUT_FILE" | sha512sum | cut --characters 1-128 )" || failure 0195115283959486
                                                                                                 PERMISSIONS="$( stat --printf %a "$INPUT_FILE" )" || failure 5743431110033372
@@ -56,7 +56,7 @@
                                                                                                         "permissions" : $PERMISSIONS ,
                                                                                                         "tag" : $TAG ,
                                                                                                         "type" : $TYPE
-                                                                                                    }' > "/output/$HASH.json"
+                                                                                                    }' > "/mounts/output/$HASH.json"
                                                                                                 if [[ "$TYPE" == "regular file" ]]
                                                                                                 then
                                                                                                     mkdir --parents "/output/$HASH"
@@ -91,9 +91,9 @@
                                                                                         ''
                                                                                             find /input -mindepth 1 -maxdepth 1 -type f -name "*.json" | while read -r INPUT_FILE
                                                                                             do
-                                                                                                PERMISSIONS="$( jq --raw-output ".permissions" "$INPUT_FILE/metadata.json" )" || failure 0537099870175194
-                                                                                                TAG="$( jq --raw-output ".tag" "$INPUT_FILE/metadata.json" )" || failure 5311405440579224
-                                                                                                TYPE="$( jq --raw-output ".type" "$INPUT_FILE/metadata.json" )" || failure 4647824064526106
+                                                                                                PERMISSIONS="$( jq --raw-output ".permissions" "$INPUT_FILE.json" )" || failure 0537099870175194
+                                                                                                TAG="$( jq --raw-output ".tag" "$INPUT_FILE.json" )" || failure 5311405440579224
+                                                                                                TYPE="$( jq --raw-output ".type" "$INPUT_FILE.json" )" || failure 4647824064526106
                                                                                                 OUTPUT_FILE="/output/$TAG"
                                                                                                 OUTPUT_DIRECTORY="$( dirname "$OUTPUT_FILE" )" || failure 4175145871150273
                                                                                                 mkdir --parents "$OUTPUT_DIRECTORY"
