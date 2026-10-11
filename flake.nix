@@ -70,6 +70,7 @@
                                                                                             ] ;
                                                                                     text =
                                                                                         ''
+                                                                                            echo 7510388921240658 >&2
                                                                                             find /mounts/input | while read -r INPUT_FILE
                                                                                             do
                                                                                                 echo 5167942701307991 >&2
@@ -103,6 +104,7 @@
                                                                                                 else
                                                                                                     failure 8786988475730505 "$HASH" "$PERMISSIONS" "$TAG" "$TYPE"
                                                                                                 fi
+                                                                                                echo 7239548551536710 >&2
                                                                                             done
                                                                                             cp --recursive /mounts/temporary/. /mounts/output
                                                                                             echo 6519844586509348 >&2
