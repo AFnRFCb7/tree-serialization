@@ -82,6 +82,7 @@
                                                                                             find /mounts/input -mindepth 1 -maxdepth 1 -print
                                                                                             find /mounts/input | while read -r INPUT_FILE
                                                                                             do
+                                                                                                echo 3472114238026532 >&2
                                                                                                 HASH="$( echo "$INPUT_FILE" | sha512sum | cut --characters 1-128 )" || failure 0195115283959486
                                                                                                 PERMISSIONS="$( stat --printf %a "$INPUT_FILE" )" || failure 5743431110033372
                                                                                                 TAG="$( echo "$INPUT_FILE" | cut --characters 15- )" || failure 4323730760707892
