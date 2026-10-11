@@ -184,39 +184,35 @@
                                                                         _pkgs = pkgs-identity pkgs ;
                                                                         in
                                                                             {
-                                                                                environment.systemPackages =
-                                                                                    [
-                                                                                        (
-                                                                                            _pkgs.writeShellApplication
-                                                                                                {
-                                                                                                    name = "compare" ;
-                                                                                                    runtimeInputs = [ _pkgs.coreutils _pkgs.diffutils ] ;
-                                                                                                    text =
-                                                                                                        ''
-                                                                                                            diff --unified ${ expected } ${ observed }
-                                                                                                        '' ;
-                                                                                                }
-                                                                                        )
-                                                                                        ( _config.tree-serialization.explode { bytes = bytes ; name = "explode" ; input = expected ; output = output ; } )
-                                                                                        ( _config.tree-serialization.implode { name = "implode" ; input = output ; output = observed ; } )
-                                                                                        (
-                                                                                            _pkgs.writeShellApplication
-                                                                                                {
-                                                                                                    name = "prepare" ;
-                                                                                                    runtimeInputs = [ _pkgs.coreutils ] ;
-                                                                                                    text =
-                                                                                                        ''
-                                                                                                            mkdir --parents ${ output }
-                                                                                                        '' ;
-                                                                                                }
-                                                                                        )
-                                                                                    ] ;
+                                                                                environment =
+                                                                                    {
+                                                                                        systemPackages =
+                                                                                            [
+                                                                                                (
+                                                                                                    _pkgs.writeShellApplication
+                                                                                                        {
+                                                                                                            name = "compare" ;
+                                                                                                            runtimeInputs = [ _pkgs.coreutils _pkgs.diffutils ] ;
+                                                                                                            text =
+                                                                                                                ''
+                                                                                                                    diff --unified ${ expected } "$OBSERVED"
+                                                                                                                '' ;
+                                                                                                        }
+                                                                                                )
+                                                                                                ( _config.tree-serialization.explode { bytes = bytes ; name = "explode" ; input = expected ; output = "$OUTPUT" ; } )
+                                                                                                ( _config.tree-serialization.implode { name = "implode" ; input = output ; output = "$OBSERVED" ; } )
+                                                                                            ] ;
+                                                                                        variables =
+                                                                                            {
+                                                                                                OBSERVED = "$( mktemp --directory )" ;
+                                                                                                OUTPUTS = "$( mktemp --directory )" ;
+                                                                                            } ;
+                                                                                    } ;
                                                                                 imports = [ failure implementation lazy-shell-application visitor ] ;
                                                                             } ;
                                                             testScript =
                                                                 ''
                                                                     client.wait_for_unit("multi-user.target")
-                                                                    client.succeed("prepare")
                                                                     client.succeed("explode")
                                                                     client.succeed("implode")
                                                                     client.succeed("compare")
