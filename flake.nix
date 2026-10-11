@@ -78,8 +78,8 @@
                                                                                             stat /mounts/input >&2
                                                                                             echo 1080191885218945 >&2
 
-                                                                                            printf 'Children:\n'
-                                                                                            find /mounts/input -mindepth 1 -maxdepth 1 -print
+                                                                                            printf 'Children:\n' >&2
+                                                                                            find /mounts/input -mindepth 1 -maxdepth 1 -print >&2
                                                                                             find /mounts/input | while read -r INPUT_FILE
                                                                                             do
                                                                                                 echo 3472114238026532 >&2
