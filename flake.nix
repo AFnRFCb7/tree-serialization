@@ -61,7 +61,7 @@
                                                                                                 if [[ "$TYPE" == "regular file" ]]
                                                                                                 then
                                                                                                     mkdir --parents "/mounts/temporary/$HASH"
-                                                                                                    cd "/mounts/output/$HASH"
+                                                                                                    cd "/mounts/temporary/$HASH"
                                                                                                     split --bytes ${ bytes } "$INPUT_FILE"
                                                                                                 fi
                                                                                             done
