@@ -47,15 +47,18 @@
                                                                                                 HASH="$( echo "$INPUT_FILE" | sha512sum | cut --characters 1-128 )" || failure 0195115283959486
                                                                                                 PERMISSIONS="$( stat --printf %a "$INPUT_FILE" )" || failure 5743431110033372
                                                                                                 TAG="$( echo "$INPUT_FILE" | cut --characters 15- )" || failure 4323730760707892
+                                                                                                TARGET="$( readlink "$INPUT_FILE" )" || failure 1577566704508967
                                                                                                 TYPE="$( stat --printf %F "$INPUT_FILE" )" || failure 5742797212640718
                                                                                                 jq \
                                                                                                     --null-input \
                                                                                                     --arg PERMISSIONS "$PERMISSIONS" \
                                                                                                     --arg TAG "$TAG" \
+                                                                                                    --arg TARGET "$TARGET" \
                                                                                                     --arg TYPE "$TYPE" \
                                                                                                     '{
                                                                                                         "permissions" : $PERMISSIONS ,
                                                                                                         "tag" : $TAG ,
+                                                                                                        "target" : $TARGET ,
                                                                                                         "type" : $TYPE
                                                                                                     }' > "/mounts/temporary/$HASH.json"
                                                                                                 if [[ "$TYPE" == "regular file" ]]
@@ -63,6 +66,11 @@
                                                                                                     mkdir --parents "/mounts/temporary/$HASH"
                                                                                                     cd "/mounts/temporary/$HASH"
                                                                                                     split --bytes ${ bytes } "$INPUT_FILE"
+                                                                                                elif [[ "$TYPE" == "symbolic link" ]]
+                                                                                                then
+                                                                                                    :
+                                                                                                else
+                                                                                                    failure 8786988475730505 "$HASH" "$PERMISSIONS" "$TAG" "$TYPE"
                                                                                                 fi
                                                                                             done
                                                                                             cp --recursive /mounts/temporary/. /mounts/output
@@ -107,6 +115,10 @@
                                                                                                 then
                                                                                                     PLUG="{ "$" }{INPUT_FILE%.*}"
                                                                                                     cat "$PLUG/*" > "$OUTPUT_FILE"
+                                                                                                elif [[ "$TYPE" == "symbolic link" ]]
+                                                                                                then
+                                                                                                    TARGET="$( jq --raw-output ".target" "$INPUT_FILE" )" || failure 2203118780634724
+                                                                                                    ln --symbolic "$TARGET" "$OUTPUT_FILE"
                                                                                                 else
                                                                                                     failure 5539970079890550 "$INPUT_FILE" "$OUTPUT_FILE" "$OUTPUT_DIRECTORY" "$PERMISSIONS" "$TAG" "$TYPE"
                                                                                                 fi
