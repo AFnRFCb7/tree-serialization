@@ -70,6 +70,14 @@
                                                                                             ] ;
                                                                                     text =
                                                                                         ''
+                                                                                            printf 'Mount contents:\n'
+                                                                                            ls -la /mounts/input
+
+                                                                                            printf 'Mount identity:\n'
+                                                                                            stat /mounts/input
+
+                                                                                            printf 'Children:\n'
+                                                                                            find /mounts/input -mindepth 1 -maxdepth 1 -print
                                                                                             find /mounts/input | while read -r INPUT_FILE
                                                                                             do
                                                                                                 HASH="$( echo "$INPUT_FILE" | sha512sum | cut --characters 1-128 )" || failure 0195115283959486
