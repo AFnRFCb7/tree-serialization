@@ -119,6 +119,7 @@
                                     check =
                                         {
                                             failure ,
+                                            lazy-shell-application ,
                                             nixosTest ,
                                             obviated-by ,
                                             observed
@@ -168,7 +169,7 @@
                                                                                                 }
                                                                                         )
                                                                                     ] ;
-                                                                                imports = [ implementation failure ] ;
+                                                                                imports = [ failure implementation lazy-shell-application ] ;
                                                                             } ;
                                                             testScript =
                                                                 ''
