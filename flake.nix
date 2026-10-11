@@ -172,6 +172,10 @@
                                                                                                 OUTPUT_FILE="/mounts/temporary/$TAG"
                                                                                                 OUTPUT_DIRECTORY="$( dirname "$OUTPUT_FILE" )" || failure 4175145871150273
                                                                                                 mkdir --parents "$OUTPUT_DIRECTORY"
+                                                                                                if [[ -e "$OUTPUT_FILE" ]]
+                                                                                                then
+                                                                                                    failure 6839918685035763
+                                                                                                fi
                                                                                                 if [[ "$TYPE" == "directory" ]]
                                                                                                 then
                                                                                                     mkdir --parents "$OUTPUT_FILE"
