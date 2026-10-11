@@ -108,7 +108,7 @@
                                                                                                     PLUG="{ "$" }{INPUT_FILE%.*}"
                                                                                                     cat "$PLUG/*" > "$OUTPUT_FILE"
                                                                                                 else
-                                                                                                    failure 5539970079890550 "$INPUT_FILE" "$TEMPORARY_FILE" "$OUTPUT_FILE" "$OUTPUT_DIRECTORY" "$PERMISSIONS" "$TAG" "$TYPE"
+                                                                                                    failure 5539970079890550 "$INPUT_FILE" "$OUTPUT_FILE" "$OUTPUT_DIRECTORY" "$PERMISSIONS" "$TAG" "$TYPE"
                                                                                                 fi
                                                                                                 chmod "$PERMISSIONS" "$OUTPUT_FILE"
                                                                                             done
