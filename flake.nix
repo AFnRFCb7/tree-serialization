@@ -45,7 +45,7 @@
                                                                                                 HASH="$( echo "$INPUT_FILE" | sha512sum | cut --characters 1-128 )" || failure 0195115283959486
                                                                                                 PERMISSIONS="$( stat --printf %a "$INPUT_FILE" )" || failure 5743431110033372
                                                                                                 TAG="$INPUT_FILE"
-                                                                                                TYPE="$( stat --printf %F "$ABSOLUTE_INPUT_FILE" )" || failure 5742797212640718
+                                                                                                TYPE="$( stat --printf %F "$INPUT_FILE" )" || failure 5742797212640718
                                                                                                 jq \
                                                                                                     --null-input \
                                                                                                     --arg PERMISSIONS "$PERMISSIONS" \
