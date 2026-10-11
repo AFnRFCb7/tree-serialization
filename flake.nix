@@ -84,10 +84,20 @@
                                                                                             do
                                                                                                 echo 3472114238026532 "$INPUT_FILE" >&2
                                                                                                 HASH="$( echo "$INPUT_FILE" | sha512sum | cut --characters 1-128 )" || failure 0195115283959486
+                                                                                                echo 9604360126361719 >&2
                                                                                                 PERMISSIONS="$( stat --printf %a "$INPUT_FILE" )" || failure 5743431110033372
+                                                                                                echo 4127421424968804 >&2
                                                                                                 TAG="$( echo "$INPUT_FILE" | cut --characters 15- )" || failure 4323730760707892
+                                                                                                echo 4830547444624530 >&2
                                                                                                 TARGET="$( readlink-safe "$INPUT_FILE" )" || failure 1577566704508967
+                                                                                                echo 0288276890453810 >&2
                                                                                                 TYPE="$( stat --printf %F "$INPUT_FILE" )" || failure 5742797212640718
+                                                                                                echo 6349108703711523 >&2
+                                                                                                if [[ -e "/mounts/temporary/$HASH" ]]
+                                                                                                then
+                                                                                                    failure 3559704137787307
+                                                                                                fi
+                                                                                                echo 1739270499464047 >&2
                                                                                                 jq \
                                                                                                     --null-input \
                                                                                                     --arg PERMISSIONS "$PERMISSIONS" \
@@ -100,6 +110,7 @@
                                                                                                         "target" : $TARGET ,
                                                                                                         "type" : $TYPE
                                                                                                     }' >&2
+                                                                                                echo 4753658272640220 >&2
                                                                                                 jq \
                                                                                                     --null-input \
                                                                                                     --arg PERMISSIONS "$PERMISSIONS" \
@@ -112,6 +123,7 @@
                                                                                                         "target" : $TARGET ,
                                                                                                         "type" : $TYPE
                                                                                                     }' > "/mounts/temporary/$HASH.json"
+                                                                                                echo 5558493800477045 >&2
                                                                                                 if [[ "$TYPE" == "regular file" ]]
                                                                                                 then
                                                                                                     mkdir --parents "/mounts/temporary/$HASH"
@@ -123,6 +135,7 @@
                                                                                                 else
                                                                                                     failure 8786988475730505 "$HASH" "$PERMISSIONS" "$TAG" "$TYPE"
                                                                                                 fi
+                                                                                                echo 1691629150163113 >&2
                                                                                             done
                                                                                             cp --recursive /mounts/temporary/. /mounts/output
                                                                                         '' ;
