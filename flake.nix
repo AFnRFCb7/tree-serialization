@@ -65,7 +65,7 @@
                                                                                                     split --bytes ${ bytes } "$INPUT_FILE"
                                                                                                 fi
                                                                                             done
-                                                                                            mv /mounts/temporary/. /mounts/output
+                                                                                            cp --recursive /mounts/temporary/. /mounts/output
                                                                                         '' ;
                                                                                 } ;
                                                                     type = _lib.types.functionTo _lib.types.package ;
@@ -112,7 +112,7 @@
                                                                                                 fi
                                                                                                 chmod "$PERMISSIONS" "$TEMPORARY_FILE"
                                                                                             done
-                                                                                            mv /mounts/temporary /mounts/output
+                                                                                            cp --recursive /mounts/temporary/. /mounts/output
                                                                                         '' ;
                                                                                 } ;
                                                                 } ;
