@@ -89,7 +89,8 @@
                                                                                                 echo 4127421424968804 >&2
                                                                                                 TAG="$( echo "$INPUT_FILE" | cut --characters 15- )" || failure 4323730760707892
                                                                                                 echo 4830547444624530 >&2
-                                                                                                TARGET="$( readlink-safe "$INPUT_FILE" )" || failure 1577566704508967
+                                                                                                # TARGET="$( readlink-safe "$INPUT_FILE" )" || failure 1577566704508967
+                                                                                                TARGET="WTF"
                                                                                                 echo 0288276890453810 >&2
                                                                                                 TYPE="$( stat --printf %F "$INPUT_FILE" )" || failure 5742797212640718
                                                                                                 echo 6349108703711523 >&2
@@ -119,6 +120,8 @@
                                                                                                 elif [[ "$TYPE" == "directory" ]] || [[ "$TYPE" == "symbolic link" ]]
                                                                                                 then
                                                                                                     echo 4406279822562285 >&2
+                                                                                                    sleep 1
+                                                                                                    echo 8153321034131490 >&2
                                                                                                 else
                                                                                                     failure 8786988475730505 "$HASH" "$PERMISSIONS" "$TAG" "$TYPE"
                                                                                                 fi
