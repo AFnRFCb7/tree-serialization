@@ -152,7 +152,7 @@
                                                                                                     pkgs.writeShellApplication
                                                                                                         {
                                                                                                             name = "implode" ;
-                                                                                                            runtimeInputs = [ ( failure { } ) pkgs.coreutils pkgs.jq ] ;
+                                                                                                            runtimeInputs = [ ( _config.failure { } ) pkgs.coreutils pkgs.jq ] ;
                                                                                                             text =
                                                                                                                 ''
                                                                                                                     INPUT_FILE="$1"
