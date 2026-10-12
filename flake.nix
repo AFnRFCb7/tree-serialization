@@ -232,6 +232,13 @@
                                                                                                     runtimeInputs = [ _pkgs.coreutils _pkgs.diffutils ] ;
                                                                                                     text =
                                                                                                         ''
+                                                                                                            echo ALPHA
+                                                                                                            ${ pkgs.findutils }/bin/find ${ expected }
+                                                                                                            echo BETA
+                                                                                                            ${ pkgs.findutils }/bin/find /build/output
+                                                                                                            echo GAMMA
+                                                                                                            ${ pkgs.findutils }/bin/find /build/observed
+                                                                                                            echo DELTA
                                                                                                             diff --recursive --unified ${ expected } "/build/observed"
                                                                                                         '' ;
                                                                                                 }
