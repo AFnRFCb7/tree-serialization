@@ -99,6 +99,7 @@
                                                                                             ] ;
                                                                                     text =
                                                                                         ''
+                                                                                            if true ; then echo
                                                                                             find /mounts/input -exec explode {} \;
                                                                                             cp --recursive /mounts/temporary/. /mounts/output
                                                                                         '' ;
