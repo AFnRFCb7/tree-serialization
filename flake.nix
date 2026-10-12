@@ -172,7 +172,7 @@
                                                                                                                     elif [[ "$TYPE" == "regular file" ]]
                                                                                                                     then
                                                                                                                         PLUG="${ "$" }{INPUT_FILE%.*}"
-                                                                                                                        cat "$PLUG/*" > "$OUTPUT_FILE"
+                                                                                                                        cat "$PLUG"/* > "$OUTPUT_FILE"
                                                                                                                     elif [[ "$TYPE" == "symbolic link" ]]
                                                                                                                     then
                                                                                                                         TARGET="$( jq --raw-output ".target" "$INPUT_FILE" )" || failure 2203118780634724
