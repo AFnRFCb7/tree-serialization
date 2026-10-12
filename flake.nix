@@ -54,27 +54,20 @@
                                                                                                             text =
                                                                                                                 ''
                                                                                                                     INPUT_FILE="$1"
-                                                                                                                    echo 3472114238026532 "$INPUT_FILE" >&2
                                                                                                                     HASH="$( echo "$INPUT_FILE" | sha512sum | cut --characters 1-128 )" || failure 0195115283959486
-                                                                                                                    echo 9604360126361719 >&2
                                                                                                                     PERMISSIONS="$( stat --printf %a "$INPUT_FILE" )" || failure 5743431110033372
-                                                                                                                    echo 4127421424968804 >&2
                                                                                                                     TAG="$( echo "$INPUT_FILE" | cut --characters 15- )" || failure 4323730760707892
-                                                                                                                    echo 4830547444624530 >&2
                                                                                                                     if [[ -L "$INPUT_FILE" ]]
                                                                                                                     then
                                                                                                                         TARGET="$( readlink "$INPUT_FILE" )" || failure 8585803186572190
                                                                                                                     else
                                                                                                                         TARGET=
                                                                                                                     fi
-                                                                                                                    echo 0288276890453810 >&2
                                                                                                                     TYPE="$( stat --printf %F "$INPUT_FILE" )" || failure 5742797212640718
-                                                                                                                    echo 6349108703711523 >&2
                                                                                                                     if [[ -e "/mounts/temporary/$HASH" ]]
                                                                                                                     then
                                                                                                                         failure 3559704137787307
                                                                                                                     fi
-                                                                                                                    echo 1739270499464047 >&2
                                                                                                                     jq \
                                                                                                                         --null-input \
                                                                                                                         --arg PERMISSIONS "$PERMISSIONS" \
@@ -87,7 +80,6 @@
                                                                                                                             "target" : $TARGET ,
                                                                                                                             "type" : $TYPE
                                                                                                                         }' > "/mounts/temporary/$HASH.json"
-                                                                                                                    echo 5558493800477045 "$TYPE" >&2
                                                                                                                     if [[ "$TYPE" == "regular file" ]]
                                                                                                                     then
                                                                                                                         mkdir --parents "/mounts/temporary/$HASH"
@@ -95,12 +87,10 @@
                                                                                                                         split --bytes ${ bytes } "$INPUT_FILE"
                                                                                                                     elif [[ "$TYPE" == "directory" ]] || [[ "$TYPE" == "symbolic link" ]]
                                                                                                                     then
-                                                                                                                        echo 4406279822562285 >&2
-                                                                                                                        echo 8153321034131490 STOP >&2
+                                                                                                                        :
                                                                                                                     else
                                                                                                                         failure 8786988475730505 "$HASH" "$PERMISSIONS" "$TAG" "$TYPE"
                                                                                                                     fi
-                                                                                                                    echo 1691629150163113 SAY HELLO >&2
                                                                                                                 '' ;
                                                                                                         }
                                                                                                 )
@@ -109,16 +99,6 @@
                                                                                             ] ;
                                                                                     text =
                                                                                         ''
-                                                                                            echo 2953389754191068 >&2
-                                                                                            echo Mount contents: >&2
-                                                                                            ls -la /mounts/input >&2
-
-                                                                                            echo Mount identity: >&2
-                                                                                            stat /mounts/input >&2
-                                                                                            echo 1080191885218945 >&2
-
-                                                                                            printf 'Children:\n' >&2
-                                                                                            find /mounts/input -mindepth 1 -maxdepth 1 -print >&2
                                                                                             find /mounts/input -exec explode {} \;
                                                                                             cp --recursive /mounts/temporary/. /mounts/output
                                                                                         '' ;
@@ -232,15 +212,6 @@
                                                                                                     runtimeInputs = [ _pkgs.coreutils _pkgs.diffutils ] ;
                                                                                                     text =
                                                                                                         ''
-                                                                                                            echo ALPHA
-                                                                                                            ${ pkgs.findutils }/bin/find ${ expected }
-                                                                                                            echo BETA
-                                                                                                            ${ pkgs.findutils }/bin/find /build/output
-                                                                                                            ${ pkgs.findutils }/bin/find /build/output -type f -exec cat {} \;
-                                                                                                            echo GAMMA
-                                                                                                            ${ pkgs.findutils }/bin/find /build/observed
-                                                                                                            ${ pkgs.findutils }/bin/find /build/observed -type f -exec cat {} \;
-                                                                                                            echo DELTA
                                                                                                             diff --recursive --unified ${ expected } "/build/observed"
                                                                                                         '' ;
                                                                                                 }
