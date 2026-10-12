@@ -46,24 +46,6 @@
                                                                                         pkgs :
                                                                                             [
                                                                                                 ( _config.failure { } )
-                                                                                                (
-                                                                                                    _config.lazy-shell-application
-                                                                                                        {
-                                                                                                            mounts = { input = { read-only = true ; source = "/mounts/input" ; type = "bind" ; } ; } ;
-                                                                                                            name = "readlink-safe" ;
-                                                                                                            post = null ;
-                                                                                                            runtime-inputs = pkgs : [ pkgs.coreutils ] ;
-                                                                                                            text =
-                                                                                                                ''
-                                                                                                                    if [[ -L /mounts/input ]]
-                                                                                                                    then
-                                                                                                                        readlink /mounts/input
-                                                                                                                    else
-                                                                                                                        echo -n ""
-                                                                                                                    fi
-                                                                                                                '' ;
-                                                                                                        }
-                                                                                                )
                                                                                                 pkgs.coreutils
                                                                                                 pkgs.findutils
                                                                                                 pkgs.jq
@@ -89,8 +71,12 @@
                                                                                                 echo 4127421424968804 >&2
                                                                                                 TAG="$( echo "$INPUT_FILE" | cut --characters 15- )" || failure 4323730760707892
                                                                                                 echo 4830547444624530 >&2
-                                                                                                # TARGET="$( readlink-safe "$INPUT_FILE" )" || failure 1577566704508967
-                                                                                                TARGET="WTF"
+                                                                                                if [[ -L "$INPUT_FILE" ]]
+                                                                                                then
+                                                                                                    TARGET="$( readlink "$INPUT_FILE" )" || failure 8585803186572190
+                                                                                                else
+                                                                                                    TARGET=
+                                                                                                fi
                                                                                                 echo 0288276890453810 >&2
                                                                                                 TYPE="$( stat --printf %F "$INPUT_FILE" )" || failure 5742797212640718
                                                                                                 echo 6349108703711523 >&2
