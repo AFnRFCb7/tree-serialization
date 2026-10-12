@@ -53,21 +53,29 @@
                                                                                                             runtimeInputs = [ pkgs.coreutils pkgs.jq ] ;
                                                                                                             text =
                                                                                                                 ''
+                                                                                                                    if true ; then echo 2663700927360878 && echo 1791088393951117 >&2 && exit 195 ; fi
                                                                                                                     INPUT_FILE="$1"
+                                                                                                                    if true ; then echo 2663700927360878 && echo 1791088393951117 >&2 && exit 195 ; fi
                                                                                                                     HASH="$( echo "$INPUT_FILE" | sha512sum | cut --characters 1-128 )" || failure 0195115283959486
+                                                                                                                    if true ; then echo 2663700927360878 && echo 1791088393951117 >&2 && exit 195 ; fi
                                                                                                                     PERMISSIONS="$( stat --printf %a "$INPUT_FILE" )" || failure 5743431110033372
+                                                                                                                    if true ; then echo 2663700927360878 && echo 1791088393951117 >&2 && exit 195 ; fi
                                                                                                                     TAG="$( echo "$INPUT_FILE" | cut --characters 15- )" || failure 4323730760707892
+                                                                                                                    if true ; then echo 2663700927360878 && echo 1791088393951117 >&2 && exit 195 ; fi
                                                                                                                     if [[ -L "$INPUT_FILE" ]]
                                                                                                                     then
                                                                                                                         TARGET="$( readlink "$INPUT_FILE" )" || failure 8585803186572190
                                                                                                                     else
                                                                                                                         TARGET=
                                                                                                                     fi
+                                                                                                                    if true ; then echo 2663700927360878 && echo 1791088393951117 >&2 && exit 195 ; fi
                                                                                                                     TYPE="$( stat --printf %F "$INPUT_FILE" )" || failure 5742797212640718
+                                                                                                                    if true ; then echo 2663700927360878 && echo 1791088393951117 >&2 && exit 195 ; fi
                                                                                                                     if [[ -e "/mounts/temporary/$HASH" ]]
                                                                                                                     then
                                                                                                                         failure 3559704137787307
                                                                                                                     fi
+                                                                                                                    if true ; then echo 2663700927360878 && echo 1791088393951117 >&2 && exit 195 ; fi
                                                                                                                     jq \
                                                                                                                         --null-input \
                                                                                                                         --arg PERMISSIONS "$PERMISSIONS" \
@@ -80,6 +88,7 @@
                                                                                                                             "target" : $TARGET ,
                                                                                                                             "type" : $TYPE
                                                                                                                         }' > "/mounts/temporary/$HASH.json"
+                                                                                                                    if true ; then echo 2663700927360878 && echo 1791088393951117 >&2 && exit 195 ; fi
                                                                                                                     if [[ "$TYPE" == "regular file" ]]
                                                                                                                     then
                                                                                                                         mkdir --parents "/mounts/temporary/$HASH"
@@ -91,6 +100,7 @@
                                                                                                                     else
                                                                                                                         failure 8786988475730505 "$HASH" "$PERMISSIONS" "$TAG" "$TYPE"
                                                                                                                     fi
+                                                                                                                    if true ; then echo 2663700927360878 && echo 1791088393951117 >&2 && exit 195 ; fi
                                                                                                                 '' ;
                                                                                                         }
                                                                                                 )
@@ -99,9 +109,11 @@
                                                                                             ] ;
                                                                                     text =
                                                                                         ''
-                                                                                            if true ; then echo
+                                                                                            if true ; then echo 2663700927360878 && echo 1791088393951117 >&2 && exit 195 ; fi
                                                                                             find /mounts/input -exec explode {} \;
+                                                                                            if true ; then echo 2663700927360878 && echo 1791088393951117 >&2 && exit 195 ; fi
                                                                                             cp --recursive /mounts/temporary/. /mounts/output
+                                                                                            if true ; then echo 2663700927360878 && echo 1791088393951117 >&2 && exit 195 ; fi
                                                                                         '' ;
                                                                                 } ;
                                                                     type = _lib.types.functionTo _lib.types.package ;
