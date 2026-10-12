@@ -236,6 +236,7 @@
                                                                                                             ${ pkgs.findutils }/bin/find ${ expected }
                                                                                                             echo BETA
                                                                                                             ${ pkgs.findutils }/bin/find /build/output
+                                                                                                            ${ pkgs.findutils }/bin/find /build/output -type f -exec cat {} \;
                                                                                                             echo GAMMA
                                                                                                             ${ pkgs.findutils }/bin/find /build/observed
                                                                                                             ${ pkgs.findutils }/bin/find /build/observed -type f -exec cat {} \;
