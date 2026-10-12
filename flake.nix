@@ -238,6 +238,7 @@
                                                                                                             ${ pkgs.findutils }/bin/find /build/output
                                                                                                             echo GAMMA
                                                                                                             ${ pkgs.findutils }/bin/find /build/observed
+                                                                                                            ${ pkgs.findutils }/bin/find /build/observed -type f -exec cat {} \;
                                                                                                             echo DELTA
                                                                                                             diff --recursive --unified ${ expected } "/build/observed"
                                                                                                         '' ;
