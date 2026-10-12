@@ -119,7 +119,7 @@
                                                                                     mounts =
                                                                                         {
                                                                                             input = { read-only = true ; source = input ; type = "bind" ; } ;
-                                                                                            output = { source = "/build/observed" ; type = "bind" ; } ;
+                                                                                            output = { source = output ; type = "bind" ; } ;
                                                                                             temporary = { type = "temporary" ; } ;
                                                                                         } ;
                                                                                     name = name ;
