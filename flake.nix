@@ -171,7 +171,7 @@
                                                                                                                         mkdir --parents "$OUTPUT_FILE"
                                                                                                                     elif [[ "$TYPE" == "regular file" ]]
                                                                                                                     then
-                                                                                                                        PLUG="{ "$" }{INPUT_FILE%.*}"
+                                                                                                                        PLUG="${ "$" }{INPUT_FILE%.*}"
                                                                                                                         cat "$PLUG/*" > "$OUTPUT_FILE"
                                                                                                                     elif [[ "$TYPE" == "symbolic link" ]]
                                                                                                                     then
