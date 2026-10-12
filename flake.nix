@@ -96,12 +96,11 @@
                                                                                                                     elif [[ "$TYPE" == "directory" ]] || [[ "$TYPE" == "symbolic link" ]]
                                                                                                                     then
                                                                                                                         echo 4406279822562285 >&2
-                                                                                                                        sleep 1
-                                                                                                                        echo 8153321034131490 >&2
+                                                                                                                        echo 8153321034131490 STOP >&2
                                                                                                                     else
                                                                                                                         failure 8786988475730505 "$HASH" "$PERMISSIONS" "$TAG" "$TYPE"
                                                                                                                     fi
-                                                                                                                    echo 1691629150163113 >&2
+                                                                                                                    echo 1691629150163113 SAY HELLO >&2
                                                                                                                 '' ;
                                                                                                         }
                                                                                                 )
@@ -145,37 +144,52 @@
                                                                                         } ;
                                                                                     name = name ;
                                                                                     post = null ;
-                                                                                    runtime-inputs = pkgs : [ ( _config.failure { } ) pkgs.coreutils pkgs.findutils pkgs.jq ] ;
+                                                                                    runtime-inputs =
+                                                                                        pkgs :
+                                                                                            [
+                                                                                                ( _config.failure { } )
+                                                                                                (
+                                                                                                    pkgs.writeShellApplication
+                                                                                                        {
+                                                                                                            name = "implode" ;
+                                                                                                            runtimeInputs = [ ( failure { } ) pkgs.coreutils pkgs.jq ] ;
+                                                                                                            text =
+                                                                                                                ''
+                                                                                                                    INPUT_FILE="$1"
+                                                                                                                    PERMISSIONS="$( jq --raw-output ".permissions" "$INPUT_FILE" )" || failure 0537099870175194
+                                                                                                                    TAG="$( jq --raw-output ".tag" "$INPUT_FILE" )" || failure 5311405440579224
+                                                                                                                    TYPE="$( jq --raw-output ".type" "$INPUT_FILE" )" || failure 4647824064526106
+                                                                                                                    OUTPUT_FILE="/mounts/temporary/$TAG"
+                                                                                                                    OUTPUT_DIRECTORY="$( dirname "$OUTPUT_FILE" )" || failure 4175145871150273
+                                                                                                                    mkdir --parents "$OUTPUT_DIRECTORY"
+                                                                                                                    if [[ -e "$OUTPUT_FILE" ]]
+                                                                                                                    then
+                                                                                                                        failure 6839918685035763
+                                                                                                                    fi
+                                                                                                                    if [[ "$TYPE" == "directory" ]]
+                                                                                                                    then
+                                                                                                                        mkdir --parents "$OUTPUT_FILE"
+                                                                                                                    elif [[ "$TYPE" == "regular file" ]]
+                                                                                                                    then
+                                                                                                                        PLUG="{ "$" }{INPUT_FILE%.*}"
+                                                                                                                        cat "$PLUG/*" > "$OUTPUT_FILE"
+                                                                                                                    elif [[ "$TYPE" == "symbolic link" ]]
+                                                                                                                    then
+                                                                                                                        TARGET="$( jq --raw-output ".target" "$INPUT_FILE" )" || failure 2203118780634724
+                                                                                                                        ln --symbolic "$TARGET" "$OUTPUT_FILE"
+                                                                                                                    else
+                                                                                                                        failure 5539970079890550 "$INPUT_FILE" "$OUTPUT_FILE" "$OUTPUT_DIRECTORY" "$PERMISSIONS" "$TAG" "$TYPE"
+                                                                                                                    fi
+                                                                                                                    chmod "$PERMISSIONS" "$OUTPUT_FILE"
+                                                                                                                '' ;
+                                                                                                        }
+                                                                                                )
+                                                                                                pkgs.coreutils
+                                                                                                pkgs.findutils
+                                                                                            ] ;
                                                                                     text =
                                                                                         ''
-                                                                                            find /mounts/input -mindepth 1 -maxdepth 1 -type f -name "*.json" | sort | while read -r INPUT_FILE
-                                                                                            do
-                                                                                                PERMISSIONS="$( jq --raw-output ".permissions" "$INPUT_FILE" )" || failure 0537099870175194
-                                                                                                TAG="$( jq --raw-output ".tag" "$INPUT_FILE" )" || failure 5311405440579224
-                                                                                                TYPE="$( jq --raw-output ".type" "$INPUT_FILE" )" || failure 4647824064526106
-                                                                                                OUTPUT_FILE="/mounts/temporary/$TAG"
-                                                                                                OUTPUT_DIRECTORY="$( dirname "$OUTPUT_FILE" )" || failure 4175145871150273
-                                                                                                mkdir --parents "$OUTPUT_DIRECTORY"
-                                                                                                if [[ -e "$OUTPUT_FILE" ]]
-                                                                                                then
-                                                                                                    failure 6839918685035763
-                                                                                                fi
-                                                                                                if [[ "$TYPE" == "directory" ]]
-                                                                                                then
-                                                                                                    mkdir --parents "$OUTPUT_FILE"
-                                                                                                elif [[ "$TYPE" == "regular file" ]]
-                                                                                                then
-                                                                                                    PLUG="{ "$" }{INPUT_FILE%.*}"
-                                                                                                    cat "$PLUG/*" > "$OUTPUT_FILE"
-                                                                                                elif [[ "$TYPE" == "symbolic link" ]]
-                                                                                                then
-                                                                                                    TARGET="$( jq --raw-output ".target" "$INPUT_FILE" )" || failure 2203118780634724
-                                                                                                    ln --symbolic "$TARGET" "$OUTPUT_FILE"
-                                                                                                else
-                                                                                                    failure 5539970079890550 "$INPUT_FILE" "$OUTPUT_FILE" "$OUTPUT_DIRECTORY" "$PERMISSIONS" "$TAG" "$TYPE"
-                                                                                                fi
-                                                                                                chmod "$PERMISSIONS" "$OUTPUT_FILE"
-                                                                                            done
+                                                                                            find /mounts/input -mindepth 1 -maxdepth 1 -type f -name "*.json" -exec implode {} \;
                                                                                             cp --recursive /mounts/temporary/. /mounts/output
                                                                                         '' ;
                                                                                 } ;
