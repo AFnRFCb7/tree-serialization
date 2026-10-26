@@ -102,6 +102,7 @@
                                                                                             find /mounts/input -exec explode {} \;
                                                                                             cp --recursive /mounts/temporary/. /mounts/output
                                                                                         '' ;
+                                                                                    variables = { } ;
                                                                                 } ;
                                                                     type = _lib.types.functionTo _lib.types.package ;
                                                                 } ;
@@ -172,6 +173,7 @@
                                                                                             find /mounts/input -mindepth 1 -maxdepth 1 -type f -name "*.json" -exec implode {} \;
                                                                                             cp --recursive /mounts/temporary/. /mounts/output
                                                                                         '' ;
+                                                                                    variables = { } ;
                                                                                 } ;
                                                                 } ;
                                                     } ;
