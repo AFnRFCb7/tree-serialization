@@ -18,9 +18,6 @@
                                         in
                                             {
                                                 options.tree-serialization =
-
-
-
                                                     {
                                                         explode =
                                                             _lib.mkOption
