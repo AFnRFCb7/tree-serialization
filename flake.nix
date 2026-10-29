@@ -18,9 +18,6 @@
                                         in
                                             {
                                                 options.tree-serialization =
-
-
-
                                                     {
                                                         explode =
                                                             _lib.mkOption
@@ -43,7 +40,7 @@
                                                                                     name = name ;
                                                                                     post = null ;
                                                                                     runtime-inputs =
-                                                                                        pkgs :
+                                                                                        { pkgs , ... } :
                                                                                             [
                                                                                                 ( _config.failure { } )
                                                                                                 (
