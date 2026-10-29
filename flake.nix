@@ -123,7 +123,7 @@
                                                                                     name = name ;
                                                                                     post = null ;
                                                                                     runtime-inputs =
-                                                                                        pkgs :
+                                                                                        { pkgs , ... } :
                                                                                             [
                                                                                                 ( _config.failure { } )
                                                                                                 (
