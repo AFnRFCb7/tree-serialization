@@ -19,7 +19,7 @@
                                                     options.tree-serialization =
                                                         {
                                                             explode =
-                                                                _lib.mkOption
+                                                                lib.mkOption
                                                                     {
                                                                         default =
                                                                             {
@@ -28,7 +28,7 @@
                                                                                 name ,
                                                                                 output
                                                                             } :
-                                                                                _config.lazy-shell-application
+                                                                                config.lazy-shell-application
                                                                                     {
                                                                                         mounts =
                                                                                             {
@@ -41,7 +41,7 @@
                                                                                         runtime-inputs =
                                                                                             { pkgs , ... } :
                                                                                                 [
-                                                                                                    ( _config.failure { } )
+                                                                                                    ( config.failure { } )
                                                                                                     (
                                                                                                         pkgs.writeShellApplication
                                                                                                             {
@@ -100,10 +100,10 @@
                                                                                             '' ;
                                                                                         variables = { } ;
                                                                                     } ;
-                                                                        type = _lib.types.functionTo _lib.types.package ;
+                                                                        type = lib.types.functionTo lib.types.package ;
                                                                     } ;
                                                             implode =
-                                                                _lib.mkOption
+                                                                lib.mkOption
                                                                     {
                                                                         default =
                                                                             {
@@ -111,7 +111,7 @@
                                                                                 name ,
                                                                                 output
                                                                             } :
-                                                                                _config.lazy-shell-application
+                                                                                config.lazy-shell-application
                                                                                     {
                                                                                         mounts =
                                                                                             {
@@ -124,12 +124,12 @@
                                                                                         runtime-inputs =
                                                                                             { pkgs , ... } :
                                                                                                 [
-                                                                                                    ( _config.failure { } )
+                                                                                                    ( config.failure { } )
                                                                                                     (
                                                                                                         pkgs.writeShellApplication
                                                                                                             {
                                                                                                                 name = "implode" ;
-                                                                                                                runtimeInputs = [ ( _config.failure { } ) pkgs.coreutils pkgs.jq ] ;
+                                                                                                                runtimeInputs = [ ( config.failure { } ) pkgs.coreutils pkgs.jq ] ;
                                                                                                                 text =
                                                                                                                     ''
                                                                                                                         INPUT_FILE="$1"
@@ -207,23 +207,23 @@
                                                                                     environment.systemPackages =
                                                                                         [
                                                                                             (
-                                                                                                _pkgs.writeShellApplication
+                                                                                                pkgs.writeShellApplication
                                                                                                     {
                                                                                                         name = "compare" ;
-                                                                                                        runtimeInputs = [ _pkgs.coreutils _pkgs.diffutils ] ;
+                                                                                                        runtimeInputs = [ pkgs.coreutils pkgs.diffutils ] ;
                                                                                                         text =
                                                                                                             ''
                                                                                                                 diff --recursive --unified ${ expected } "/build/observed"
                                                                                                             '' ;
                                                                                                     }
                                                                                             )
-                                                                                            ( _config.tree-serialization.explode { bytes = bytes ; name = "explode" ; input = expected ; output = "/build/output" ; } )
-                                                                                            ( _config.tree-serialization.implode { name = "implode" ; input = "/build/output" ; output = "/build/observed" ; } )
+                                                                                            ( config.tree-serialization.explode { bytes = bytes ; name = "explode" ; input = expected ; output = "/build/output" ; } )
+                                                                                            ( config.tree-serialization.implode { name = "implode" ; input = "/build/output" ; output = "/build/observed" ; } )
                                                                                             (
-                                                                                                _pkgs.writeShellApplication
+                                                                                                pkgs.writeShellApplication
                                                                                                     {
                                                                                                         name = "prepare" ;
-                                                                                                        runtimeInputs = [ _pkgs.coreutils ] ;
+                                                                                                        runtimeInputs = [ pkgs.coreutils ] ;
                                                                                                         text =
                                                                                                             ''
                                                                                                                 mkdir --parents /build/observed /build/output
