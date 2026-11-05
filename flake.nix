@@ -37,7 +37,7 @@
                                                                                                 temporary = { type = "temporary" ; } ;
                                                                                             } ;
                                                                                         name = name ;
-                                                                                        post = null ;
+                                                                                        post = [ ] ;
                                                                                         runtime-inputs =
                                                                                             { pkgs , ... } :
                                                                                                 [
@@ -120,7 +120,7 @@
                                                                                                 temporary = { type = "temporary" ; } ;
                                                                                             } ;
                                                                                         name = name ;
-                                                                                        post = null ;
+                                                                                        post = [ ] ;
                                                                                         runtime-inputs =
                                                                                             { pkgs , ... } :
                                                                                                 [
