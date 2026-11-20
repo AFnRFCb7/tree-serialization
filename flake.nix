@@ -160,7 +160,7 @@
                                                                                                                             # shellcheck disable=SC2050
                                                                                                                             if [[ "${ if garble then "true" else "false" }" == true ]]
                                                                                                                             then
-                                                                                                                                cat "$PLUG"/* | tr 'A-Za-z' 'N-ZA-Mn-za-m' "$INPUT_FILE" | > "$OUTPUT_FILE"
+                                                                                                                                cat "$PLUG"/* | tr 'A-Za-z' 'N-ZA-Mn-za-m' "$INPUT_FILE" > "$OUTPUT_FILE"
                                                                                                                             else
                                                                                                                                 cat "$PLUG"/* > "$OUTPUT_FILE"
                                                                                                                             fi
