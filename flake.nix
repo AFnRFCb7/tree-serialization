@@ -81,6 +81,7 @@
                                                                                                                         then
                                                                                                                             mkdir --parents "/mounts/temporary/$HASH"
                                                                                                                             cd "/mounts/temporary/$HASH"
+                                                                                                                            # shellcheck disable=SC2050
                                                                                                                             if [[ "${ if garble then "true" else "false" }" == true ]]
                                                                                                                             then
                                                                                                                                 tr 'A-Za-z' 'N-ZA-Mn-za-m' "$INPUT_FILE" | "$INPUT_FILE" | split --bytes ${ bytes } -
@@ -156,6 +157,7 @@
                                                                                                                         elif [[ "$TYPE" == "regular file" ]]
                                                                                                                         then
                                                                                                                             PLUG="${ "$" }{INPUT_FILE%.*}"
+                                                                                                                            # shellcheck disable=SC2050
                                                                                                                             if [[ "${ if garble then "true" else "false" }" == true ]]
                                                                                                                             then
                                                                                                                                 cat "$PLUG"/* | tr 'A-Za-z' 'N-ZA-Mn-za-m' "$INPUT_FILE" | > "$OUTPUT_FILE"
