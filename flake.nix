@@ -23,6 +23,7 @@
                                                                     {
                                                                         default =
                                                                             {
+                                                                                garble ? false ,
                                                                                 bytes ,
                                                                                 input ,
                                                                                 name ,
@@ -46,7 +47,7 @@
                                                                                                         pkgs.writeShellApplication
                                                                                                             {
                                                                                                                 name = "explode" ;
-                                                                                                                runtimeInputs = [ pkgs.coreutils pkgs.jq ] ;
+                                                                                                                runtimeInputs = [ pkgs.coreutils pkgs.jq pkgs.gnused ] ;
                                                                                                                 text =
                                                                                                                     ''
                                                                                                                         INPUT_FILE="$1"
@@ -80,7 +81,12 @@
                                                                                                                         then
                                                                                                                             mkdir --parents "/mounts/temporary/$HASH"
                                                                                                                             cd "/mounts/temporary/$HASH"
-                                                                                                                            split --bytes ${ bytes } "$INPUT_FILE"
+                                                                                                                            if [[ "${ garble }" == true ]]
+                                                                                                                            then
+                                                                                                                                sed "s#BEGIN EC PRIVATE KEY#8838621158776516#" "$INPUT_FILE" | split --bytes ${ bytes } -
+                                                                                                                            else
+                                                                                                                                split --bytes ${ bytes } "$INPUT_FILE"
+                                                                                                                            fi
                                                                                                                         elif [[ "$TYPE" == "directory" ]] || [[ "$TYPE" == "symbolic link" ]]
                                                                                                                         then
                                                                                                                             :
@@ -107,6 +113,7 @@
                                                                     {
                                                                         default =
                                                                             {
+                                                                                garble ? false ,
                                                                                 input ,
                                                                                 name ,
                                                                                 output
@@ -129,7 +136,7 @@
                                                                                                         pkgs.writeShellApplication
                                                                                                             {
                                                                                                                 name = "implode" ;
-                                                                                                                runtimeInputs = [ ( config.failure { } ) pkgs.coreutils pkgs.jq ] ;
+                                                                                                                runtimeInputs = [ ( config.failure { } ) pkgs.coreutils pkgs.jq pkgs.gnused ] ;
                                                                                                                 text =
                                                                                                                     ''
                                                                                                                         INPUT_FILE="$1"
@@ -149,7 +156,7 @@
                                                                                                                         elif [[ "$TYPE" == "regular file" ]]
                                                                                                                         then
                                                                                                                             PLUG="${ "$" }{INPUT_FILE%.*}"
-                                                                                                                            cat "$PLUG"/* > "$OUTPUT_FILE"
+                                                                                                                            cat "$PLUG"/* | sed -e "s#8838621158776516#BEGIN EC PRIVATE KEY#" > "$OUTPUT_FILE"
                                                                                                                         elif [[ "$TYPE" == "symbolic link" ]]
                                                                                                                         then
                                                                                                                             TARGET="$( jq --raw-output ".target" "$INPUT_FILE" )" || failure 2203118780634724
